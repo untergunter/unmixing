@@ -1,26 +1,27 @@
-This repo is an implementation of stochastic linear unmixing using pytorch.
-It is a fast and efficient, and can unmix even if there are null values.
+This repo is an implementation of stochastic linear unmixing using pytorch.\n
+It is a fast and efficient, and can unmix even if there are null values.\n
+\n
+$H$ is a 2d metrix, each row in it is a single end member.\n
+Each column is a single feature of the end members.\n
+No null values are allowed in $H$.\n
+$O$ is a 2d metrix, each row a single observed instance.\n
+The columns of $O$ are the same as the columns of $H$.\n
+Null values are allowed in $O$.\n
+The main class of this repo, LinearUnmixing, is calculating $R$ matrix\n
+that minimizes the loss between $O$ and $H \cdot R$.\n
+$R$ is constrained to be non-negative and each row in R sums to 1.\n
+Reconstruction error can be used for filtering, since there is no\n
+assessment for $R$, but we can asses the distance between $O$ and $H \cdot R$.\n
+\n
+requirements:\n
+numpy\n
+torch\n
+\n
+Installation:\n
+pip install unmixing\n
+\n
+Usage example:\n
 
-$H$ is a 2d metrix, each row in it is a single end member.
-Each column is a single feature of the end members.
-No null values are allowed in $H$.
-$O$ is a 2d metrix, each row a single observed instance.
-The columns of $O$ are the same as the columns of $H$.
-Null values are allowed in $O$.
-The main class of this repo, LinearUnmixing, is calculating $R$ matrix
-that minimizes the loss between $O$ and $H \cdot R$.
-$R$ is constrained to be non-negative and each row in R sums to 1.
-Reconstruction error can be used for filtering, since there is no
-assessment for $R$, but we can asses the distance between $O$ and $H \cdot R$.
-
-requirements:
-numpy
-torch
-
-Installation:
-pip install unmixing
-
-Usage example:
     n_endmembers = 5
     n_features = 4
     n_rows = 1_000

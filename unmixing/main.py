@@ -195,41 +195,5 @@ class LinearUnmixing:
         errors_per_column = self.observed.detach().cpu().numpy() - self.predictions
         return errors_per_column
 
-
 if __name__ == '__main__':
-    n_endmembers = 5
-    n_features = 4
-    n_rows = 1_000
-    endmembers = torch.randint(1, 10, (n_endmembers, n_features), dtype=torch.float32)
-    non_negative = torch.randn((n_rows, n_endmembers)) ** 2
-    rates = non_negative / non_negative.sum(axis=1).reshape((-1, 1))
-    observed = torch.matmul(rates, endmembers)
-    lm = LinearUnmixing(endmembers, observed)
-    lm.unmix()
-    pred_rates = lm.get_rates()
-
-    reconstruction_error_per_observation = lm.get_errors()
-    print(f"first example - mean absolute reconstruction error: "
-          f"{np.mean(np.abs(reconstruction_error_per_observation))}")
-    detailed_reconstruction_error = lm.get_errors_per_column()
-    print(f"first example - mean absolute reconstruction error per entry: "
-          f"{np.mean(np.abs(detailed_reconstruction_error))}")
-    rates_errors = (pred_rates - rates.numpy()).sum(axis=1).round(2)
-    print(f"first example - max rate error: {rates_errors.max()}")
-
-
-    with_nones = observed[:]
-    with_nones[with_nones >= np.quantile(a = with_nones,
-                                         q = 0.75)] = np.nan
-    lm.set_observed(with_nones)
-    lm.unmix()
-    pred_rates = lm.get_rates()
-
-    reconstruction_error_per_observation = lm.get_errors()
-    print(f"second example - mean absolute reconstruction error with nans: "
-          f"{np.nanmean(np.abs(reconstruction_error_per_observation))}")
-    detailed_reconstruction_error = lm.get_errors_per_column()
-    print(f"second example - mean absolute reconstruction error per entry with nans: "
-          f"{np.nanmean(np.abs(detailed_reconstruction_error))}")
-    rates_errors = (pred_rates - rates.numpy()).sum(axis=1).round(2)
-    print(f"second example - max rate error with nans: {rates_errors.max()}")
+    pass
